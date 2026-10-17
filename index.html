@@ -27,7 +27,7 @@ main:has(.flower-scene:not([hidden])){padding:88px 24px 88px}.flower-scene{max-w
 </section>
 <section class="scene" id="refusal" hidden aria-labelledby="refusalTitle"><p class="eyebrow">Так, стоп.</p><h1 id="refusalTitle">В смысле <span class="pink">«нет»?</span></h1><p class="reply">Вообще-то сын старался.</p><button class="continue" id="continue">Ладно, давай поздравление</button></section>
 <section class="scene flower-scene" id="accepted" hidden aria-labelledby="flowerTitle">
-<p class="eyebrow" id="flowerLabel">Мам, смотри</p><h1 id="flowerTitle" aria-label="Всего 53">Всего</h1>
+<p class="eyebrow" id="flowerLabel">Мам, смотри</p><h1 id="flowerTitle" aria-label="Всего лишь 53">Всего лишь</h1>
 <div class="flower-art"><div class="flower-number" id="flowerNumber" aria-hidden="true">53</div><div class="flower-shadow" id="flowerShadow"></div><canvas id="flowerCanvas" role="img" aria-label="53 красных лепестка собираются в объёмную розу. Розу можно вращать перетаскиванием."></canvas></div>
 <button class="continue flower-start" id="flowerStart">Посмотреть иначе</button><p id="flowerStatus" class="sr-only" aria-live="polite"></p>
 </section>
@@ -44,5 +44,5 @@ function show(id){for(const name of ['intro','refusal','accepted'])$(name).hidde
 $('no').onclick=()=>show('refusal');$('continue').onclick=()=>{show('accepted');window.startFlowerScene?.()};
 
 </script>
-<script src="flower.js?v=just-53-beauty"></script>
+<script src="flower.js?v=just-only-53"></script>
 </body></html>
