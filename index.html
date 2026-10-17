@@ -11,6 +11,9 @@
 
 main:has(.flower-scene:not([hidden])){padding:88px 24px 88px}.flower-scene{max-width:960px;position:relative}.flower-scene h1{font-size:clamp(34px,4.5vw,56px);letter-spacing:-.055em;min-height:1.15em}.flower-scene .eyebrow{margin-bottom:18px}.flower-art{position:relative;height:min(53vh,480px);min-height:340px;width:min(820px,100%);margin:8px auto 0}.flower-number{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(180px,24vw,270px);font-weight:600;letter-spacing:-.09em;color:#ecc0d1;line-height:1;transition:opacity .45s,transform .65s;pointer-events:none}.flower-number.gone{opacity:0;transform:scale(1.06)}#flowerCanvas{position:relative;width:100%;height:100%;display:block;opacity:0;transition:opacity .5s;touch-action:pan-y;cursor:grab}#flowerCanvas.visible{opacity:1}#flowerCanvas.dragging{cursor:grabbing}.flower-shadow{position:absolute;left:25%;right:25%;bottom:12%;height:22px;border-radius:50%;background:radial-gradient(ellipse,rgba(132,56,82,.17),transparent 70%);filter:blur(12px);opacity:0;pointer-events:none}.flower-start{margin-top:4px;min-width:205px;transition:background .25s,opacity .25s}.flower-start:disabled{background:transparent;color:#82767e;cursor:default}.flower-start.replay{background:transparent;color:#94526b;text-decoration:underline;text-underline-offset:6px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:600px){.flower-scene h1{font-size:34px}.flower-art{height:330px;min-height:0;margin-top:8px;margin-left:-12px;width:calc(100% + 24px)}.flower-number{font-size:210px}.flower-scene .eyebrow{font-size:11px;letter-spacing:.12em}.flower-start{font-size:15px;margin-top:0}.flower-scene{padding-top:4px}}
+
+/* The blast lives in the viewport, never inside the flower's layout box. */
+#flowerCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none;opacity:0;transition:none;cursor:auto}#flowerCanvas.visible{opacity:1}.flower-art.orbitable{cursor:grab}.flower-art.dragging{cursor:grabbing}.flower-start{transition:background .38s ease,color .3s ease,box-shadow .38s ease,opacity .07s linear,transform .38s ease}.flower-start.charging{background:#b80518;color:#fff;box-shadow:0 6px 28px rgba(184,5,24,.18);transform:scale(1.025)}.flower-start.charging:disabled{background:#b80518;color:#fff}.flower-start.ruptured{opacity:0;pointer-events:none;transform:scale(1.025)}.flower-scene h1,.flower-scene>.eyebrow{transition:opacity .3s ease}.flower-quiet{opacity:0}.flower-number.gone{opacity:0;transform:scale(.96)}
 </style>
 </head>
 <body>
@@ -41,5 +44,5 @@ function show(id){for(const name of ['intro','refusal','accepted'])$(name).hidde
 $('no').onclick=()=>show('refusal');$('continue').onclick=()=>{show('accepted');window.startFlowerScene?.()};
 
 </script>
-<script src="flower.js?v=red-rose-fast-3"></script>
+<script src="flower.js?v=button-burst-53"></script>
 </body></html>
