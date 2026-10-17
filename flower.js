@@ -33,7 +33,7 @@ let text=document.createElement('canvas');text.width=400;text.height=260;let tc=
 let W=1,H=1,vp,cid=0,active=false,started=0,playing=false,last=0,dragX=0,dragY=0,targetX=0,targetY=0,orbitX=0,orbitY=0,isDragging=false,pointerX=0,pointerY=0,frameTime=0;const shadow=document.getElementById('flowerShadow');
 const mix=(a,b,t)=>a+(b-a)*t,clamp=x=>Math.max(0,Math.min(1,x)),smooth=x=>{x=clamp(x);return x*x*(3-2*x)},ease=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
 function resize(){let r=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;canvas.width=W*d;canvas.height=H*d;gl.viewport(0,0,canvas.width,canvas.height);vp=camera(W/H);if(!playing&&active)draw(performance.now())}new ResizeObserver(resize).observe(canvas);
-function draw(now){if(!active)return;let t=reduced?10:(now-started)/1000;gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);gl.uniformMatrix4fv(loc.vp,false,vp);gl.uniform1f(loc.opacity,1);
+function draw(now){if(!active)return;let t=reduced?10:(now-started)/1000*3;gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);gl.uniformMatrix4fv(loc.vp,false,vp);gl.uniform1f(loc.opacity,1);
 const assembled=t>=7.9,dt=Math.min(.05,(now-(frameTime||now-16))/1000);frameTime=now;
 const follow=1-Math.exp(-dt*5.5);dragX=mix(dragX,targetX+orbitX,follow);dragY=mix(dragY,targetY+orbitY,follow);
 const turn=smooth((t-6.2)/1.7),rot=transform(0,0,0,dragY*turn,dragX*turn,0,1);
@@ -54,5 +54,5 @@ canvas.addEventListener('pointerdown',e=>{if(!canvas.dataset.done||e.button!==0)
 window.addEventListener('pointerup',()=>{isDragging=false;canvas.classList.remove('dragging')});
 canvas.addEventListener('lostpointercapture',()=>{isDragging=false;canvas.classList.remove('dragging')});
 document.addEventListener('visibilitychange',()=>{if(!active||!playing)return;if(document.hidden){last=performance.now();cancelAnimationFrame(cid)}else{started+=performance.now()-last;cid=requestAnimationFrame(draw)}});
-window.flowerDebug={count:petals.length,get rotation(){return {x:dragX,y:dragY,targetX,targetY,orbitX,orbitY}},seek(seconds){active=true;playing=false;started=performance.now()-seconds*1000;number.classList.add('gone');canvas.classList.add('visible');resize();draw(performance.now())}};
+window.flowerDebug={count:petals.length,get rotation(){return {x:dragX,y:dragY,targetX,targetY,orbitX,orbitY}},seek(seconds){active=true;playing=false;started=performance.now()-seconds*1000/3;number.classList.add('gone');canvas.classList.add('visible');resize();draw(performance.now())}};
 })();
