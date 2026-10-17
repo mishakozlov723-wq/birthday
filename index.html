@@ -14,6 +14,10 @@ main:has(.flower-scene:not([hidden])){padding:88px 24px 88px}.flower-scene{max-w
 
 /* The blast lives in the viewport, never inside the flower's layout box. */
 #flowerCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none;opacity:0;transition:none;cursor:auto}#flowerCanvas.visible{opacity:1}.flower-art.orbitable{cursor:grab}.flower-art.dragging{cursor:grabbing}.flower-start{transition:background .38s ease,color .3s ease,box-shadow .38s ease,opacity .07s linear,transform .38s ease}.flower-start.charging{background:#b80518;color:#fff;box-shadow:0 6px 28px rgba(184,5,24,.18);transform:scale(1.025)}.flower-start.charging:disabled{background:#b80518;color:#fff}.flower-start.ruptured{opacity:0;pointer-events:none;transform:scale(1.025)}.flower-scene h1,.flower-scene>.eyebrow{opacity:1;transform:translateY(0);filter:blur(0);transition:opacity .65s ease,transform .95s cubic-bezier(.22,1,.36,1),filter .8s ease}.flower-scene>.eyebrow{transition-delay:.08s}.flower-scene .flower-quiet{opacity:0;transform:translateY(18px);filter:blur(3px)}.flower-number.gone{opacity:0;transform:scale(.96)}
+/* One number, with room to feel its scale. */
+.flower-next{position:fixed;right:48px;bottom:84px;border:0;background:none;color:#94526b;font-size:16px;padding:12px 0;text-decoration:underline;text-underline-offset:6px;opacity:0;transform:translateY(8px);transition:opacity .65s ease,transform .65s ease;pointer-events:none}.flower-next.ready{opacity:1;transform:none;pointer-events:auto}.flower-next[hidden]{display:none}
+.care-scene{max-width:1200px}.care-scene .eyebrow{margin-bottom:40px}.care-count{display:flex;align-items:baseline;justify-content:center;gap:24px;margin:0;line-height:1.1;font-weight:500;letter-spacing:-.04em}.care-word{font-size:32px;letter-spacing:-.04em;font-weight:400;color:#766a72;animation:arrive .9s ease both}.care-digits{display:inline-block;width:6.15ch;text-align:center;font-size:clamp(150px,15vw,216px);font-weight:600;letter-spacing:-.07em;font-variant-numeric:tabular-nums;color:#b84d77;animation:arrive .9s ease both}.care-copy{font-size:30px;line-height:1.4;font-weight:400;margin:32px 0 0;letter-spacing:-.035em}.care-finale{font-size:48px;line-height:1.15;font-weight:600;letter-spacing:-.055em;margin:28px 0 0}.care-reveal{opacity:0;transform:translateY(20px);filter:blur(3px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.22,1,.36,1),filter .8s ease}.care-reveal.shown{opacity:1;transform:none;filter:blur(0)}
+@media(prefers-reduced-motion:reduce){.care-reveal{transition:none}}
 </style>
 </head>
 <body>
@@ -31,7 +35,15 @@ main:has(.flower-scene:not([hidden])){padding:88px 24px 88px}.flower-scene{max-w
 <div class="flower-art"><div class="flower-number" id="flowerNumber" aria-hidden="true">53</div><div class="flower-shadow" id="flowerShadow"></div><canvas id="flowerCanvas" role="img" aria-label="53 красных лепестка собираются в объёмную розу. Розу можно вращать перетаскиванием."></canvas></div>
 <button class="continue flower-start" id="flowerStart">Посмотреть иначе</button><p id="flowerStatus" class="sr-only" aria-live="polite"></p>
 </section>
+<section class="scene care-scene" id="care" hidden aria-label="30 лет заботы о детях">
+<p class="eyebrow">30 лет в медицине</p>
+<h1 class="care-count" aria-label="Более 45 тысяч раз"><span class="care-word">Более</span><span class="care-digits" id="careDigits" aria-hidden="true">1</span><span class="care-word">раз</span></h1>
+<p class="care-copy care-reveal" id="careCopy">Ты заботилась о детях.</p>
+<p class="care-finale care-reveal" id="careFinale">А вот это действительно много.</p>
+<p class="sr-only" id="careStatus" aria-live="polite"></p>
+</section>
 </main>
+<button class="flower-next" id="flowerNext" hidden>Дальше →</button>
 <footer class="footer"><span>одно особенное поздравление</span><span>только для тебя <span class="heart" aria-hidden="true">♡</span></span></footer>
 <script>
 const $=id=>document.getElementById(id);let attempts=0,lastMove=0;
@@ -40,9 +52,25 @@ function dodge(e){if(e.pointerType==='touch')e.preventDefault();const now=Date.n
 $('yes').addEventListener('pointerenter',e=>{if(e.pointerType!=='touch'&&e.pointerType!=='')dodge(e)});
 $('yes').addEventListener('pointerdown',e=>{e.preventDefault();dodge(e)});
 $('yes').addEventListener('click',e=>{if(e.detail===0){show('accepted');window.startFlowerScene?.()}else dodge(e)});
-function show(id){for(const name of ['intro','refusal','accepted'])$(name).hidden=name!==id;const title=$(id).querySelector('h1');title.tabIndex=-1;title.focus({preventScroll:true})}
+function show(id){for(const name of ['intro','refusal','accepted','care'])$(name).hidden=name!==id;if(id!=='accepted'){$('flowerNext').hidden=true;$('flowerNext').classList.remove('ready')}const title=$(id).querySelector('h1');title.tabIndex=-1;title.focus({preventScroll:true})}
 $('no').onclick=()=>show('refusal');$('continue').onclick=()=>{show('accepted');window.startFlowerScene?.()};
 
 </script>
-<script src="flower.js?v=just-only-53"></script>
+<script src="flower.js?v=care-45000"></script>
+<script>
+(()=>{
+const next=$('flowerNext'),digits=$('careDigits'),copy=$('careCopy'),finale=$('careFinale');
+let frame=0,timers=[];
+window.addEventListener('flower:started',()=>{next.hidden=true;next.classList.remove('ready')});
+window.addEventListener('flower:complete',()=>{next.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>next.classList.add('ready')))});
+next.addEventListener('click',()=>{
+window.stopFlowerScene?.();show('care');cancelAnimationFrame(frame);timers.forEach(clearTimeout);timers=[];
+copy.classList.remove('shown');finale.classList.remove('shown');digits.textContent='1';$('careStatus').textContent='';
+const formatter=new Intl.NumberFormat('ru-RU'),duration=3400,start=performance.now();let previous=1;
+function finish(){digits.textContent=formatter.format(45000);$('careStatus').textContent='Более 45 тысяч раз ты заботилась о детях.';if(reduce){copy.classList.add('shown');finale.classList.add('shown')}else{timers.push(setTimeout(()=>copy.classList.add('shown'),300));timers.push(setTimeout(()=>finale.classList.add('shown'),1350))}}
+function tick(now){const progress=Math.min(1,Math.max(0,(now-start-350)/duration)),ease=1-Math.pow(1-progress,3);const value=progress<1?Math.min(44999,Math.floor(1+44999*ease)):45000;if(value!==previous){digits.textContent=formatter.format(value);previous=value}if(progress<1)frame=requestAnimationFrame(tick);else finish()}
+if(reduce)finish();else frame=requestAnimationFrame(tick);
+});
+})();
+</script>
 </body></html>
