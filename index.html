@@ -13,7 +13,7 @@ main:has(.flower-scene:not([hidden])){padding:88px 24px 88px}.flower-scene{max-w
 @media(max-width:600px){.flower-scene h1{font-size:34px}.flower-art{height:330px;min-height:0;margin-top:8px;margin-left:-12px;width:calc(100% + 24px)}.flower-number{font-size:210px}.flower-scene .eyebrow{font-size:11px;letter-spacing:.12em}.flower-start{font-size:15px;margin-top:0}.flower-scene{padding-top:4px}}
 
 /* The blast lives in the viewport, never inside the flower's layout box. */
-#flowerCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none;opacity:0;transition:none;cursor:auto}#flowerCanvas.visible{opacity:1}.flower-art.orbitable{cursor:grab}.flower-art.dragging{cursor:grabbing}.flower-start{transition:background .38s ease,color .3s ease,box-shadow .38s ease,opacity .07s linear,transform .38s ease}.flower-start.charging{background:#b80518;color:#fff;box-shadow:0 6px 28px rgba(184,5,24,.18);transform:scale(1.025)}.flower-start.charging:disabled{background:#b80518;color:#fff}.flower-start.ruptured{opacity:0;pointer-events:none;transform:scale(1.025)}.flower-scene h1,.flower-scene>.eyebrow{transition:opacity .3s ease}.flower-quiet{opacity:0}.flower-number.gone{opacity:0;transform:scale(.96)}
+#flowerCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none;opacity:0;transition:none;cursor:auto}#flowerCanvas.visible{opacity:1}.flower-art.orbitable{cursor:grab}.flower-art.dragging{cursor:grabbing}.flower-start{transition:background .38s ease,color .3s ease,box-shadow .38s ease,opacity .07s linear,transform .38s ease}.flower-start.charging{background:#b80518;color:#fff;box-shadow:0 6px 28px rgba(184,5,24,.18);transform:scale(1.025)}.flower-start.charging:disabled{background:#b80518;color:#fff}.flower-start.ruptured{opacity:0;pointer-events:none;transform:scale(1.025)}.flower-scene h1,.flower-scene>.eyebrow{opacity:1;transform:translateY(0);filter:blur(0);transition:opacity .65s ease,transform .95s cubic-bezier(.22,1,.36,1),filter .8s ease}.flower-scene>.eyebrow{transition-delay:.08s}.flower-scene .flower-quiet{opacity:0;transform:translateY(18px);filter:blur(3px)}.flower-number.gone{opacity:0;transform:scale(.96)}
 </style>
 </head>
 <body>
@@ -27,7 +27,7 @@ main:has(.flower-scene:not([hidden])){padding:88px 24px 88px}.flower-scene{max-w
 </section>
 <section class="scene" id="refusal" hidden aria-labelledby="refusalTitle"><p class="eyebrow">Так, стоп.</p><h1 id="refusalTitle">В смысле <span class="pink">«нет»?</span></h1><p class="reply">Вообще-то сын старался.</p><button class="continue" id="continue">Ладно, давай поздравление</button></section>
 <section class="scene flower-scene" id="accepted" hidden aria-labelledby="flowerTitle">
-<p class="eyebrow" id="flowerLabel">Одна маленькая проверка</p><h1 id="flowerTitle">53 — это много?</h1>
+<p class="eyebrow" id="flowerLabel">Мам, смотри</p><h1 id="flowerTitle">У этой цифры есть секрет.</h1>
 <div class="flower-art"><div class="flower-number" id="flowerNumber" aria-hidden="true">53</div><div class="flower-shadow" id="flowerShadow"></div><canvas id="flowerCanvas" role="img" aria-label="53 красных лепестка собираются в объёмную розу. Розу можно вращать перетаскиванием."></canvas></div>
 <button class="continue flower-start" id="flowerStart">Посмотреть иначе</button><p id="flowerStatus" class="sr-only" aria-live="polite"></p>
 </section>
@@ -44,5 +44,5 @@ function show(id){for(const name of ['intro','refusal','accepted'])$(name).hidde
 $('no').onclick=()=>show('refusal');$('continue').onclick=()=>{show('accepted');window.startFlowerScene?.()};
 
 </script>
-<script src="flower.js?v=button-burst-53"></script>
+<script src="flower.js?v=soft-copy-54"></script>
 </body></html>
